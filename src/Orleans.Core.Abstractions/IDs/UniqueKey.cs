@@ -47,7 +47,7 @@ namespace Orleans.Runtime
 
         public bool IsLongKey
         {
-            get { return N0 == 0; }
+            get { return N0 == 0 && string.IsNullOrEmpty(KeyExt); }
         }
 
         public bool IsSystemTargetKey
@@ -59,7 +59,7 @@ namespace Orleans.Runtime
         {
             get {
                 var category = IdCategory;
-                return category == Category.KeyExtGrain       
+                return category == Category.KeyExtGrain
                     || category == Category.GeoClient; // geo clients use the KeyExt string to specify the cluster id
             }
         }
@@ -281,7 +281,7 @@ namespace Orleans.Runtime
                 {
                     n = JenkinsHash.ComputeHash(TypeCodeData, N0, N1);
                 }
-                // Unchecked is required because the Jenkins hash is an unsigned 32-bit integer, 
+                // Unchecked is required because the Jenkins hash is an unsigned 32-bit integer,
                 // which we need to convert to a signed 32-bit integer.
                 uniformHashCache = n;
             }
